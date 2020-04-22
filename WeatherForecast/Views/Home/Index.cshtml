@@ -1,0 +1,41 @@
+﻿@model List<WeatherForecast.Models.WeatherViewModel>
+@{
+    ViewBag.Title = "Home Page";
+}
+
+
+<div class="row">
+    <div class="w3-col s4" style="text-align:right;margin-top:10px;margin-left:70%;">
+        <a href="#" id="LogoutBtn" class="btn btn-info btn-lg" style="background-color:#2c3e50;border-color:#2c3e50;font-size:16px;">
+            <span class="glyphicon glyphicon-log-out"></span> Log out
+        </a>
+    </div>
+    @foreach (var weather in Model)
+    {
+        <div class="col-md-4">
+            <h2>@weather.WeatherDate</h2>
+            <img src="@weather.ImgUrl" class="imgUrl" />
+            <p>@weather.WeatherState</p>
+        </div>
+    }
+</div>
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.loading').css('display', 'none');
+            $('#LogoutBtn').click(function (e) {
+                $.ajax({
+                    type: "GET",
+                    url: '/Login/LogoutTheUser',
+                    success: function (result) {
+                        if (result.split('¬')[1] == "1") {
+                            window.location.href = result.split('¬')[0]
+                        }
+                    },
+                    error: function () {
+                    }
+                })
+            });
+        });
+    </script>
+    }
